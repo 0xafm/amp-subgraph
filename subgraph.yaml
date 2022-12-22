@@ -1,0 +1,22 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: AmperaVault
+    network: mainnet
+    source:
+      address: "0x5fbdb2315678afecb367f032d93f642f64180aa3"
+      abi: AmperaVault
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+
+      abis:
+        - name: AmperaVault
+          file: ./abis/AmperaVault.json
+      eventHandlers:
+
+      file: ./src/ampera-vault.ts
