@@ -1,0 +1,16 @@
+type PaymentLock @entity(immutable: false) {
+  id: String!
+  account: Account!
+  recipient: Bytes!
+  amount: BigInt!
+  expiration: BigInt!
+  collateralId: BigInt!
+  active: Boolean!
+  nonce: BigInt!
+}
+
+type Account @entity(immutable: false) {
+  id: Bytes!
+  paymentLocks: [PaymentLock!] @derivedFrom(field: "account")
+  nonce: BigInt!
+}

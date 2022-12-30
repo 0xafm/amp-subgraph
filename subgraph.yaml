@@ -4,19 +4,23 @@ schema:
 dataSources:
   - kind: ethereum
     name: AmperaVault
-    network: mainnet
+    network: goerli
     source:
-      address: "0x5fbdb2315678afecb367f032d93f642f64180aa3"
+      address: "0x8D7EB31Fa48e6058Be62D4703E54d20260e41c42"
       abi: AmperaVault
+      startBlock: 8182061
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-
+        - PaymentLock
+        - Account
       abis:
         - name: AmperaVault
           file: ./abis/AmperaVault.json
-      eventHandlers:
+      callHandlers:
+        - function: authorizeSpend(address,uint256,uint256,uint256,uint256)
+          handler: handleAuthorizeSpend
 
       file: ./src/ampera-vault.ts

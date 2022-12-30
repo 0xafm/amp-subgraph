@@ -1,11 +1,15 @@
 [
   {
     "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
+      { "internalType": "address", "name": "recipient", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" },
+      { "internalType": "uint256", "name": "collateralId", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "securedAssetId",
+        "type": "uint256"
+      },
+      { "internalType": "uint256", "name": "securedAmount", "type": "uint256" }
     ],
     "name": "authorizeSpend",
     "outputs": [],
