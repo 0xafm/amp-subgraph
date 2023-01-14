@@ -1,12 +1,14 @@
 type PaymentLock @entity(immutable: false) {
   id: String!
   account: Account!
-  recipient: Bytes!
+  claimant: Bytes!
   amount: BigInt!
   expiration: BigInt!
   collateralId: BigInt!
-  active: Boolean!
+  securedAssetId: BigInt!
+  securedAmount: BigInt!
   nonce: BigInt!
+  claimed: Boolean!
 }
 
 type Account @entity(immutable: false) {

@@ -51,13 +51,13 @@ export class PaymentLock extends Entity {
     this.set("account", Value.fromBytes(value));
   }
 
-  get recipient(): Bytes {
-    let value = this.get("recipient");
+  get claimant(): Bytes {
+    let value = this.get("claimant");
     return value!.toBytes();
   }
 
-  set recipient(value: Bytes) {
-    this.set("recipient", Value.fromBytes(value));
+  set claimant(value: Bytes) {
+    this.set("claimant", Value.fromBytes(value));
   }
 
   get amount(): BigInt {
@@ -87,13 +87,22 @@ export class PaymentLock extends Entity {
     this.set("collateralId", Value.fromBigInt(value));
   }
 
-  get active(): boolean {
-    let value = this.get("active");
-    return value!.toBoolean();
+  get securedAssetId(): BigInt {
+    let value = this.get("securedAssetId");
+    return value!.toBigInt();
   }
 
-  set active(value: boolean) {
-    this.set("active", Value.fromBoolean(value));
+  set securedAssetId(value: BigInt) {
+    this.set("securedAssetId", Value.fromBigInt(value));
+  }
+
+  get securedAmount(): BigInt {
+    let value = this.get("securedAmount");
+    return value!.toBigInt();
+  }
+
+  set securedAmount(value: BigInt) {
+    this.set("securedAmount", Value.fromBigInt(value));
   }
 
   get nonce(): BigInt {
@@ -103,6 +112,15 @@ export class PaymentLock extends Entity {
 
   set nonce(value: BigInt) {
     this.set("nonce", Value.fromBigInt(value));
+  }
+
+  get claimed(): boolean {
+    let value = this.get("claimed");
+    return value!.toBoolean();
+  }
+
+  set claimed(value: boolean) {
+    this.set("claimed", Value.fromBoolean(value));
   }
 }
 

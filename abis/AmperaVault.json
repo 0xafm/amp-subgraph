@@ -1,78 +1,304 @@
 [
   {
+    "name": "PaymentLockEvent",
     "inputs": [
-      { "internalType": "address", "name": "recipient", "type": "address" },
-      { "internalType": "uint256", "name": "amount", "type": "uint256" },
-      { "internalType": "uint256", "name": "collateralId", "type": "uint256" },
-      {
-        "internalType": "uint256",
-        "name": "securedAssetId",
-        "type": "uint256"
-      },
-      { "internalType": "uint256", "name": "securedAmount", "type": "uint256" }
+      { "name": "locker", "type": "address", "indexed": true },
+      { "name": "recipient", "type": "address", "indexed": true },
+      { "name": "amount", "type": "uint256", "indexed": false },
+      { "name": "collateralId", "type": "uint256", "indexed": false },
+      { "name": "securedAssetId", "type": "uint256", "indexed": false },
+      { "name": "securedAmount", "type": "uint256", "indexed": false },
+      { "name": "nonce", "type": "uint256", "indexed": false },
+      { "name": "eventType", "type": "uint256", "indexed": true }
     ],
-    "name": "authorizeSpend",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
+    "anonymous": false,
+    "type": "event"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "claimCollateral",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
+    "name": "PaymentLockCreated",
     "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
+      { "name": "locker", "type": "address", "indexed": true },
+      { "name": "claimant", "type": "address", "indexed": true },
+      { "name": "amount", "type": "uint256", "indexed": false },
+      { "name": "expiration", "type": "uint256", "indexed": false },
+      { "name": "collateralId", "type": "uint256", "indexed": false },
+      { "name": "securedAssetId", "type": "uint256", "indexed": false },
+      { "name": "securedAmount", "type": "uint256", "indexed": false },
+      { "name": "nonce", "type": "uint256", "indexed": false },
+      { "name": "active", "type": "bool", "indexed": false },
+      { "name": "convertible", "type": "bool", "indexed": false }
     ],
-    "name": "freeCollateral",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "anonymous": false,
+    "type": "event"
   },
   {
+    "name": "PaymentLockResupplied",
+    "inputs": [
+      { "name": "locker", "type": "address", "indexed": true },
+      { "name": "claimant", "type": "address", "indexed": true },
+      { "name": "amount", "type": "uint256", "indexed": false }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "name": "PaymentLockReleased",
+    "inputs": [
+      { "name": "locker", "type": "address", "indexed": true },
+      { "name": "claimant", "type": "address", "indexed": true },
+      { "name": "amount", "type": "uint256", "indexed": false }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "name": "PaymentLockClaimed",
+    "inputs": [
+      { "name": "locker", "type": "address", "indexed": true },
+      { "name": "claimant", "type": "address", "indexed": true },
+      { "name": "recipient", "type": "address", "indexed": false },
+      { "name": "amount", "type": "uint256", "indexed": false }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "name": "PaymentLockExpired",
+    "inputs": [
+      { "name": "locker", "type": "address", "indexed": true },
+      { "name": "claimant", "type": "address", "indexed": true },
+      { "name": "amount", "type": "uint256", "indexed": false }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "name": "PaymentLockExpirationExtended",
+    "inputs": [
+      { "name": "locker", "type": "address", "indexed": true },
+      { "name": "claimant", "type": "address", "indexed": true },
+      { "name": "extension", "type": "uint256", "indexed": false }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "constructor",
     "inputs": [],
-    "name": "latestPrice",
-    "outputs": [{ "internalType": "int256", "name": "", "type": "int256" }],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "outputs": []
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "lockAmt",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "pendingPayments",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "setOwner",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
+    "type": "function",
+    "name": "deposit",
     "inputs": [
-      { "internalType": "uint256", "name": "", "type": "uint256" },
-      { "internalType": "address", "name": "", "type": "address" }
+      { "name": "collateralId", "type": "uint256" },
+      { "name": "amount", "type": "uint256" }
     ],
-    "name": "setPriceFeed",
-    "outputs": [],
+    "outputs": []
+  },
+  {
     "stateMutability": "nonpayable",
-    "type": "function"
+    "type": "function",
+    "name": "getCollateralHealth",
+    "inputs": [
+      { "name": "collateralId", "type": "uint256" },
+      { "name": "collateralAmount", "type": "uint256" },
+      { "name": "securedAssetId", "type": "uint256" },
+      { "name": "securedAmount", "type": "uint256" }
+    ],
+    "outputs": [{ "name": "", "type": "uint256" }]
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "createLock",
+    "inputs": [
+      { "name": "recipient", "type": "address" },
+      { "name": "amount", "type": "uint256" },
+      { "name": "collateralId", "type": "uint256" },
+      { "name": "securedAssetId", "type": "uint256" },
+      { "name": "securedAmount", "type": "uint256" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "resupplyLock",
+    "inputs": [
+      { "name": "recipient", "type": "address" },
+      { "name": "amount", "type": "uint256" },
+      { "name": "collateralId", "type": "uint256" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "extendLock",
+    "inputs": [
+      { "name": "recipient", "type": "address" },
+      { "name": "timeExtension", "type": "uint256" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "claimCollateral",
+    "inputs": [
+      { "name": "depositor", "type": "address" },
+      { "name": "claimRecipient", "type": "address" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "unlockWithSignature",
+    "inputs": [
+      { "name": "depositor", "type": "address" },
+      { "name": "recipient", "type": "address" },
+      { "name": "nonce", "type": "uint256" },
+      { "name": "r", "type": "uint256" },
+      { "name": "s", "type": "uint256" },
+      { "name": "v", "type": "uint256" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "freeExpiredLock",
+    "inputs": [
+      { "name": "depositor", "type": "address" },
+      { "name": "recipient", "type": "address" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "convertLock",
+    "inputs": [
+      { "name": "depositor", "type": "address" },
+      { "name": "recipient", "type": "address" },
+      { "name": "collateralId", "type": "uint256" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "flashConvertLock",
+    "inputs": [
+      { "name": "depositor", "type": "address" },
+      { "name": "recipient", "type": "address" },
+      { "name": "collateralId", "type": "uint256" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "setOwner",
+    "inputs": [{ "name": "newOwner", "type": "address" }],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "setLockTime",
+    "inputs": [{ "name": "lockTime", "type": "uint256" }],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "setMaxLockTime",
+    "inputs": [{ "name": "maxLockTime", "type": "uint256" }],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "setCollateralParams",
+    "inputs": [
+      { "name": "collateralAssetId", "type": "uint256" },
+      { "name": "addr", "type": "address" },
+      { "name": "decimals", "type": "uint256" },
+      { "name": "priceFeed", "type": "address" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "setPriceFeed",
+    "inputs": [
+      { "name": "assetId", "type": "uint256" },
+      { "name": "feed", "type": "address" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "setMinCollatFactor",
+    "inputs": [
+      { "name": "collateralId", "type": "uint256" },
+      { "name": "newFactor", "type": "uint256" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "updatePrice",
+    "inputs": [{ "name": "collateralId", "type": "uint256" }],
+    "outputs": []
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "priceFeeds",
+    "inputs": [{ "name": "arg0", "type": "uint256" }],
+    "outputs": [{ "name": "", "type": "address" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "latestPrice",
+    "inputs": [{ "name": "arg0", "type": "uint256" }],
+    "outputs": [{ "name": "", "type": "int256" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "collateralAssets",
+    "inputs": [{ "name": "arg0", "type": "uint256" }],
+    "outputs": [{ "name": "", "type": "address" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "deposits",
+    "inputs": [
+      { "name": "arg0", "type": "address" },
+      { "name": "arg1", "type": "uint256" }
+    ],
+    "outputs": [{ "name": "", "type": "uint256" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "lockedDeposits",
+    "inputs": [
+      { "name": "arg0", "type": "address" },
+      { "name": "arg1", "type": "uint256" }
+    ],
+    "outputs": [{ "name": "", "type": "uint256" }]
   }
 ]

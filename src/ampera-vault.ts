@@ -1,26 +1,74 @@
-import { BigInt } from "@graphprotocol/graph-ts";
-import { AuthorizeSpendCall } from "../generated/AmperaVault/AmperaVault";
-import { loadAccount, loadPaymentLock } from "./utils";
+import { BigInt } from '@graphprotocol/graph-ts'
+import {
+  PaymentLockClaimed,
+  PaymentLockCreated,
+  PaymentLockExpired,
+  PaymentLockExpirationExtended,
+  PaymentLockReleased,
+  PaymentLockResupplied,
+} from '../generated/AmperaVault/AmperaVault'
+import { loadAccount, loadPaymentLock } from './utils'
 
-const LOCK_TIME = BigInt.fromI64(100000);
+export function handlePaymentLockCreated(event: PaymentLockCreated): void {
+  const lock = loadPaymentLock(
+    event.params.locker.toHex() + event.params.claimant.toHex(),
+  )
+  let account = loadAccount(event.params.locker)
 
-export function handleAuthorizeSpend(call: AuthorizeSpendCall): void {
-  let account = loadAccount(call.from);
-  let paymentLock = loadPaymentLock(
-    `${call.from.toHex()}-${call.inputs.recipient.toHex()}`
-  );
+  account.nonce = account.nonce.plus(BigInt.fromI64(1))
 
-  paymentLock.account = account.id;
-  paymentLock.recipient = call.inputs.recipient;
-  paymentLock.amount = call.inputs.amount;
-  paymentLock.expiration = LOCK_TIME;
-  paymentLock.collateralId = call.inputs.collateralId;
-  paymentLock.active = true;
-  paymentLock.nonce = account.nonce;
+  lock.account = event.params.locker
+  lock.amount = event.params.amount
+  lock.claimed = false
+  lock.collateralId = event.params.collateralId
+  lock.expiration = event.params.expiration
+  lock.nonce = event.params.nonce
+  lock.securedAmount = event.params.securedAmount
+  lock.securedAssetId = event.params.securedAssetId
 
-  paymentLock.save();
+  lock.save()
+}
 
-  account.nonce = account.nonce.plus(BigInt.fromI64(1));
+export function handlePaymentLockClaimed(event: PaymentLockClaimed): void {
+  const lock = loadPaymentLock(
+    event.params.locker.toHex() + event.params.claimant.toHex(),
+  )
+  lock.claimed = true
+  lock.save()
+}
 
-  account.save();
+export function handlePaymentLockExpirationExtended(
+  event: PaymentLockExpirationExtended,
+): void {
+  let lock = loadPaymentLock(
+    event.params.locker.toHex() + event.params.claimant.toHex(),
+  )
+  lock.expiration = lock.expiration.plus(event.params.extension)
+  lock.save()
+}
+
+export function handlePaymentLockExpired(event: PaymentLockExpired): void {
+  let lock = loadPaymentLock(
+    event.params.locker.toHex() + event.params.claimant.toHex(),
+  )
+  lock.claimed = true
+  lock.save()
+}
+
+export function handlePaymentLockReleased(event: PaymentLockReleased): void {
+  let lock = loadPaymentLock(
+    event.params.locker.toHex() + event.params.claimant.toHex(),
+  )
+  lock.claimed = true
+  lock.save()
+}
+
+export function handlePaymentLockResupplied(
+  event: PaymentLockResupplied,
+): void {
+  let lock = loadPaymentLock(
+    event.params.locker.toHex() + event.params.claimant.toHex(),
+  )
+  lock.amount = lock.amount.plus(event.params.amount)
+  lock.save()
 }

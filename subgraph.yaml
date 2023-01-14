@@ -6,9 +6,9 @@ dataSources:
     name: AmperaVault
     network: goerli
     source:
-      address: "0x8D7EB31Fa48e6058Be62D4703E54d20260e41c42"
       abi: AmperaVault
-      startBlock: 8182061
+      address: '0x0aBe17D2d64C1d4a4068C5ceaFe2cEfE3ca85EEc'
+      startBlock: 8305069
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -19,8 +19,18 @@ dataSources:
       abis:
         - name: AmperaVault
           file: ./abis/AmperaVault.json
-      callHandlers:
-        - function: authorizeSpend(address,uint256,uint256,uint256,uint256)
-          handler: handleAuthorizeSpend
-
+      eventHandlers:
+        - event: PaymentLockClaimed(indexed address,indexed address,address,uint256)
+          handler: handlePaymentLockClaimed
+        - event: PaymentLockCreated(indexed address,indexed
+            address,uint256,uint256,uint256,uint256,uint256,uint256,bool,bool)
+          handler: handlePaymentLockCreated
+        - event: PaymentLockExpirationExtended(indexed address,indexed address,uint256)
+          handler: handlePaymentLockExpirationExtended
+        - event: PaymentLockExpired(indexed address,indexed address,uint256)
+          handler: handlePaymentLockExpired
+        - event: PaymentLockReleased(indexed address,indexed address,uint256)
+          handler: handlePaymentLockReleased
+        - event: PaymentLockResupplied(indexed address,indexed address,uint256)
+          handler: handlePaymentLockResupplied
       file: ./src/ampera-vault.ts

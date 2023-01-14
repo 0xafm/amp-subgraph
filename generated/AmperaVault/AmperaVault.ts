@@ -10,60 +10,395 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
+export class PaymentLockEvent extends ethereum.Event {
+  get params(): PaymentLockEvent__Params {
+    return new PaymentLockEvent__Params(this);
+  }
+}
+
+export class PaymentLockEvent__Params {
+  _event: PaymentLockEvent;
+
+  constructor(event: PaymentLockEvent) {
+    this._event = event;
+  }
+
+  get locker(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get recipient(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get collateralId(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get securedAssetId(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get securedAmount(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+
+  get nonce(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
+
+  get eventType(): BigInt {
+    return this._event.parameters[7].value.toBigInt();
+  }
+}
+
+export class PaymentLockCreated extends ethereum.Event {
+  get params(): PaymentLockCreated__Params {
+    return new PaymentLockCreated__Params(this);
+  }
+}
+
+export class PaymentLockCreated__Params {
+  _event: PaymentLockCreated;
+
+  constructor(event: PaymentLockCreated) {
+    this._event = event;
+  }
+
+  get locker(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get claimant(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get expiration(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get collateralId(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get securedAssetId(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+
+  get securedAmount(): BigInt {
+    return this._event.parameters[6].value.toBigInt();
+  }
+
+  get nonce(): BigInt {
+    return this._event.parameters[7].value.toBigInt();
+  }
+
+  get active(): boolean {
+    return this._event.parameters[8].value.toBoolean();
+  }
+
+  get convertible(): boolean {
+    return this._event.parameters[9].value.toBoolean();
+  }
+}
+
+export class PaymentLockResupplied extends ethereum.Event {
+  get params(): PaymentLockResupplied__Params {
+    return new PaymentLockResupplied__Params(this);
+  }
+}
+
+export class PaymentLockResupplied__Params {
+  _event: PaymentLockResupplied;
+
+  constructor(event: PaymentLockResupplied) {
+    this._event = event;
+  }
+
+  get locker(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get claimant(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+}
+
+export class PaymentLockReleased extends ethereum.Event {
+  get params(): PaymentLockReleased__Params {
+    return new PaymentLockReleased__Params(this);
+  }
+}
+
+export class PaymentLockReleased__Params {
+  _event: PaymentLockReleased;
+
+  constructor(event: PaymentLockReleased) {
+    this._event = event;
+  }
+
+  get locker(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get claimant(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+}
+
+export class PaymentLockClaimed extends ethereum.Event {
+  get params(): PaymentLockClaimed__Params {
+    return new PaymentLockClaimed__Params(this);
+  }
+}
+
+export class PaymentLockClaimed__Params {
+  _event: PaymentLockClaimed;
+
+  constructor(event: PaymentLockClaimed) {
+    this._event = event;
+  }
+
+  get locker(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get claimant(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get recipient(): Address {
+    return this._event.parameters[2].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+}
+
+export class PaymentLockExpired extends ethereum.Event {
+  get params(): PaymentLockExpired__Params {
+    return new PaymentLockExpired__Params(this);
+  }
+}
+
+export class PaymentLockExpired__Params {
+  _event: PaymentLockExpired;
+
+  constructor(event: PaymentLockExpired) {
+    this._event = event;
+  }
+
+  get locker(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get claimant(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+}
+
+export class PaymentLockExpirationExtended extends ethereum.Event {
+  get params(): PaymentLockExpirationExtended__Params {
+    return new PaymentLockExpirationExtended__Params(this);
+  }
+}
+
+export class PaymentLockExpirationExtended__Params {
+  _event: PaymentLockExpirationExtended;
+
+  constructor(event: PaymentLockExpirationExtended) {
+    this._event = event;
+  }
+
+  get locker(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get claimant(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get extension(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+}
+
 export class AmperaVault extends ethereum.SmartContract {
   static bind(address: Address): AmperaVault {
     return new AmperaVault("AmperaVault", address);
   }
 
-  latestPrice(): BigInt {
-    let result = super.call("latestPrice", "latestPrice():(int256)", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_latestPrice(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("latestPrice", "latestPrice():(int256)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  lockAmt(param0: Address): BigInt {
-    let result = super.call("lockAmt", "lockAmt(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_lockAmt(param0: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("lockAmt", "lockAmt(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  pendingPayments(param0: Address): BigInt {
+  getCollateralHealth(
+    collateralId: BigInt,
+    collateralAmount: BigInt,
+    securedAssetId: BigInt,
+    securedAmount: BigInt
+  ): BigInt {
     let result = super.call(
-      "pendingPayments",
-      "pendingPayments(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      "getCollateralHealth",
+      "getCollateralHealth(uint256,uint256,uint256,uint256):(uint256)",
+      [
+        ethereum.Value.fromUnsignedBigInt(collateralId),
+        ethereum.Value.fromUnsignedBigInt(collateralAmount),
+        ethereum.Value.fromUnsignedBigInt(securedAssetId),
+        ethereum.Value.fromUnsignedBigInt(securedAmount)
+      ]
     );
 
     return result[0].toBigInt();
   }
 
-  try_pendingPayments(param0: Address): ethereum.CallResult<BigInt> {
+  try_getCollateralHealth(
+    collateralId: BigInt,
+    collateralAmount: BigInt,
+    securedAssetId: BigInt,
+    securedAmount: BigInt
+  ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "pendingPayments",
-      "pendingPayments(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      "getCollateralHealth",
+      "getCollateralHealth(uint256,uint256,uint256,uint256):(uint256)",
+      [
+        ethereum.Value.fromUnsignedBigInt(collateralId),
+        ethereum.Value.fromUnsignedBigInt(collateralAmount),
+        ethereum.Value.fromUnsignedBigInt(securedAssetId),
+        ethereum.Value.fromUnsignedBigInt(securedAmount)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  priceFeeds(arg0: BigInt): Address {
+    let result = super.call("priceFeeds", "priceFeeds(uint256):(address)", [
+      ethereum.Value.fromUnsignedBigInt(arg0)
+    ]);
+
+    return result[0].toAddress();
+  }
+
+  try_priceFeeds(arg0: BigInt): ethereum.CallResult<Address> {
+    let result = super.tryCall("priceFeeds", "priceFeeds(uint256):(address)", [
+      ethereum.Value.fromUnsignedBigInt(arg0)
+    ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  latestPrice(arg0: BigInt): BigInt {
+    let result = super.call("latestPrice", "latestPrice(uint256):(int256)", [
+      ethereum.Value.fromUnsignedBigInt(arg0)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_latestPrice(arg0: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("latestPrice", "latestPrice(uint256):(int256)", [
+      ethereum.Value.fromUnsignedBigInt(arg0)
+    ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  collateralAssets(arg0: BigInt): Address {
+    let result = super.call(
+      "collateralAssets",
+      "collateralAssets(uint256):(address)",
+      [ethereum.Value.fromUnsignedBigInt(arg0)]
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_collateralAssets(arg0: BigInt): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "collateralAssets",
+      "collateralAssets(uint256):(address)",
+      [ethereum.Value.fromUnsignedBigInt(arg0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  deposits(arg0: Address, arg1: BigInt): BigInt {
+    let result = super.call("deposits", "deposits(address,uint256):(uint256)", [
+      ethereum.Value.fromAddress(arg0),
+      ethereum.Value.fromUnsignedBigInt(arg1)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_deposits(arg0: Address, arg1: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "deposits",
+      "deposits(address,uint256):(uint256)",
+      [
+        ethereum.Value.fromAddress(arg0),
+        ethereum.Value.fromUnsignedBigInt(arg1)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  lockedDeposits(arg0: Address, arg1: BigInt): BigInt {
+    let result = super.call(
+      "lockedDeposits",
+      "lockedDeposits(address,uint256):(uint256)",
+      [
+        ethereum.Value.fromAddress(arg0),
+        ethereum.Value.fromUnsignedBigInt(arg1)
+      ]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_lockedDeposits(arg0: Address, arg1: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "lockedDeposits",
+      "lockedDeposits(address,uint256):(uint256)",
+      [
+        ethereum.Value.fromAddress(arg0),
+        ethereum.Value.fromUnsignedBigInt(arg1)
+      ]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -73,20 +408,126 @@ export class AmperaVault extends ethereum.SmartContract {
   }
 }
 
-export class AuthorizeSpendCall extends ethereum.Call {
-  get inputs(): AuthorizeSpendCall__Inputs {
-    return new AuthorizeSpendCall__Inputs(this);
+export class ConstructorCall extends ethereum.Call {
+  get inputs(): ConstructorCall__Inputs {
+    return new ConstructorCall__Inputs(this);
   }
 
-  get outputs(): AuthorizeSpendCall__Outputs {
-    return new AuthorizeSpendCall__Outputs(this);
+  get outputs(): ConstructorCall__Outputs {
+    return new ConstructorCall__Outputs(this);
   }
 }
 
-export class AuthorizeSpendCall__Inputs {
-  _call: AuthorizeSpendCall;
+export class ConstructorCall__Inputs {
+  _call: ConstructorCall;
 
-  constructor(call: AuthorizeSpendCall) {
+  constructor(call: ConstructorCall) {
+    this._call = call;
+  }
+}
+
+export class ConstructorCall__Outputs {
+  _call: ConstructorCall;
+
+  constructor(call: ConstructorCall) {
+    this._call = call;
+  }
+}
+
+export class DepositCall extends ethereum.Call {
+  get inputs(): DepositCall__Inputs {
+    return new DepositCall__Inputs(this);
+  }
+
+  get outputs(): DepositCall__Outputs {
+    return new DepositCall__Outputs(this);
+  }
+}
+
+export class DepositCall__Inputs {
+  _call: DepositCall;
+
+  constructor(call: DepositCall) {
+    this._call = call;
+  }
+
+  get collateralId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+}
+
+export class DepositCall__Outputs {
+  _call: DepositCall;
+
+  constructor(call: DepositCall) {
+    this._call = call;
+  }
+}
+
+export class GetCollateralHealthCall extends ethereum.Call {
+  get inputs(): GetCollateralHealthCall__Inputs {
+    return new GetCollateralHealthCall__Inputs(this);
+  }
+
+  get outputs(): GetCollateralHealthCall__Outputs {
+    return new GetCollateralHealthCall__Outputs(this);
+  }
+}
+
+export class GetCollateralHealthCall__Inputs {
+  _call: GetCollateralHealthCall;
+
+  constructor(call: GetCollateralHealthCall) {
+    this._call = call;
+  }
+
+  get collateralId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get collateralAmount(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get securedAssetId(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get securedAmount(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
+  }
+}
+
+export class GetCollateralHealthCall__Outputs {
+  _call: GetCollateralHealthCall;
+
+  constructor(call: GetCollateralHealthCall) {
+    this._call = call;
+  }
+
+  get value0(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class CreateLockCall extends ethereum.Call {
+  get inputs(): CreateLockCall__Inputs {
+    return new CreateLockCall__Inputs(this);
+  }
+
+  get outputs(): CreateLockCall__Outputs {
+    return new CreateLockCall__Outputs(this);
+  }
+}
+
+export class CreateLockCall__Inputs {
+  _call: CreateLockCall;
+
+  constructor(call: CreateLockCall) {
     this._call = call;
   }
 
@@ -111,10 +552,82 @@ export class AuthorizeSpendCall__Inputs {
   }
 }
 
-export class AuthorizeSpendCall__Outputs {
-  _call: AuthorizeSpendCall;
+export class CreateLockCall__Outputs {
+  _call: CreateLockCall;
 
-  constructor(call: AuthorizeSpendCall) {
+  constructor(call: CreateLockCall) {
+    this._call = call;
+  }
+}
+
+export class ResupplyLockCall extends ethereum.Call {
+  get inputs(): ResupplyLockCall__Inputs {
+    return new ResupplyLockCall__Inputs(this);
+  }
+
+  get outputs(): ResupplyLockCall__Outputs {
+    return new ResupplyLockCall__Outputs(this);
+  }
+}
+
+export class ResupplyLockCall__Inputs {
+  _call: ResupplyLockCall;
+
+  constructor(call: ResupplyLockCall) {
+    this._call = call;
+  }
+
+  get recipient(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get collateralId(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+}
+
+export class ResupplyLockCall__Outputs {
+  _call: ResupplyLockCall;
+
+  constructor(call: ResupplyLockCall) {
+    this._call = call;
+  }
+}
+
+export class ExtendLockCall extends ethereum.Call {
+  get inputs(): ExtendLockCall__Inputs {
+    return new ExtendLockCall__Inputs(this);
+  }
+
+  get outputs(): ExtendLockCall__Outputs {
+    return new ExtendLockCall__Outputs(this);
+  }
+}
+
+export class ExtendLockCall__Inputs {
+  _call: ExtendLockCall;
+
+  constructor(call: ExtendLockCall) {
+    this._call = call;
+  }
+
+  get recipient(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get timeExtension(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+}
+
+export class ExtendLockCall__Outputs {
+  _call: ExtendLockCall;
+
+  constructor(call: ExtendLockCall) {
     this._call = call;
   }
 }
@@ -136,8 +649,12 @@ export class ClaimCollateralCall__Inputs {
     this._call = call;
   }
 
-  get value0(): Address {
+  get depositor(): Address {
     return this._call.inputValues[0].value.toAddress();
+  }
+
+  get claimRecipient(): Address {
+    return this._call.inputValues[1].value.toAddress();
   }
 }
 
@@ -149,151 +666,163 @@ export class ClaimCollateralCall__Outputs {
   }
 }
 
-export class FreeCollateralCall extends ethereum.Call {
-  get inputs(): FreeCollateralCall__Inputs {
-    return new FreeCollateralCall__Inputs(this);
+export class UnlockWithSignatureCall extends ethereum.Call {
+  get inputs(): UnlockWithSignatureCall__Inputs {
+    return new UnlockWithSignatureCall__Inputs(this);
   }
 
-  get outputs(): FreeCollateralCall__Outputs {
-    return new FreeCollateralCall__Outputs(this);
+  get outputs(): UnlockWithSignatureCall__Outputs {
+    return new UnlockWithSignatureCall__Outputs(this);
   }
 }
 
-export class FreeCollateralCall__Inputs {
-  _call: FreeCollateralCall;
+export class UnlockWithSignatureCall__Inputs {
+  _call: UnlockWithSignatureCall;
 
-  constructor(call: FreeCollateralCall) {
+  constructor(call: UnlockWithSignatureCall) {
     this._call = call;
   }
 
-  get value0(): Address {
+  get depositor(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get value1(): Address {
+  get recipient(): Address {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get value2(): BigInt {
+  get nonce(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
 
-  get value3(): BigInt {
+  get r(): BigInt {
     return this._call.inputValues[3].value.toBigInt();
   }
 
-  get value4(): BigInt {
+  get s(): BigInt {
     return this._call.inputValues[4].value.toBigInt();
   }
 
-  get value5(): BigInt {
+  get v(): BigInt {
     return this._call.inputValues[5].value.toBigInt();
   }
 }
 
-export class FreeCollateralCall__Outputs {
-  _call: FreeCollateralCall;
+export class UnlockWithSignatureCall__Outputs {
+  _call: UnlockWithSignatureCall;
 
-  constructor(call: FreeCollateralCall) {
+  constructor(call: UnlockWithSignatureCall) {
     this._call = call;
   }
 }
 
-export class LatestPriceCall extends ethereum.Call {
-  get inputs(): LatestPriceCall__Inputs {
-    return new LatestPriceCall__Inputs(this);
+export class FreeExpiredLockCall extends ethereum.Call {
+  get inputs(): FreeExpiredLockCall__Inputs {
+    return new FreeExpiredLockCall__Inputs(this);
   }
 
-  get outputs(): LatestPriceCall__Outputs {
-    return new LatestPriceCall__Outputs(this);
-  }
-}
-
-export class LatestPriceCall__Inputs {
-  _call: LatestPriceCall;
-
-  constructor(call: LatestPriceCall) {
-    this._call = call;
+  get outputs(): FreeExpiredLockCall__Outputs {
+    return new FreeExpiredLockCall__Outputs(this);
   }
 }
 
-export class LatestPriceCall__Outputs {
-  _call: LatestPriceCall;
+export class FreeExpiredLockCall__Inputs {
+  _call: FreeExpiredLockCall;
 
-  constructor(call: LatestPriceCall) {
+  constructor(call: FreeExpiredLockCall) {
     this._call = call;
   }
 
-  get value0(): BigInt {
-    return this._call.outputValues[0].value.toBigInt();
-  }
-}
-
-export class LockAmtCall extends ethereum.Call {
-  get inputs(): LockAmtCall__Inputs {
-    return new LockAmtCall__Inputs(this);
-  }
-
-  get outputs(): LockAmtCall__Outputs {
-    return new LockAmtCall__Outputs(this);
-  }
-}
-
-export class LockAmtCall__Inputs {
-  _call: LockAmtCall;
-
-  constructor(call: LockAmtCall) {
-    this._call = call;
-  }
-
-  get value0(): Address {
+  get depositor(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
+
+  get recipient(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
 }
 
-export class LockAmtCall__Outputs {
-  _call: LockAmtCall;
+export class FreeExpiredLockCall__Outputs {
+  _call: FreeExpiredLockCall;
 
-  constructor(call: LockAmtCall) {
+  constructor(call: FreeExpiredLockCall) {
+    this._call = call;
+  }
+}
+
+export class ConvertLockCall extends ethereum.Call {
+  get inputs(): ConvertLockCall__Inputs {
+    return new ConvertLockCall__Inputs(this);
+  }
+
+  get outputs(): ConvertLockCall__Outputs {
+    return new ConvertLockCall__Outputs(this);
+  }
+}
+
+export class ConvertLockCall__Inputs {
+  _call: ConvertLockCall;
+
+  constructor(call: ConvertLockCall) {
     this._call = call;
   }
 
-  get value0(): BigInt {
-    return this._call.outputValues[0].value.toBigInt();
-  }
-}
-
-export class PendingPaymentsCall extends ethereum.Call {
-  get inputs(): PendingPaymentsCall__Inputs {
-    return new PendingPaymentsCall__Inputs(this);
-  }
-
-  get outputs(): PendingPaymentsCall__Outputs {
-    return new PendingPaymentsCall__Outputs(this);
-  }
-}
-
-export class PendingPaymentsCall__Inputs {
-  _call: PendingPaymentsCall;
-
-  constructor(call: PendingPaymentsCall) {
-    this._call = call;
-  }
-
-  get value0(): Address {
+  get depositor(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
+
+  get recipient(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get collateralId(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
 }
 
-export class PendingPaymentsCall__Outputs {
-  _call: PendingPaymentsCall;
+export class ConvertLockCall__Outputs {
+  _call: ConvertLockCall;
 
-  constructor(call: PendingPaymentsCall) {
+  constructor(call: ConvertLockCall) {
+    this._call = call;
+  }
+}
+
+export class FlashConvertLockCall extends ethereum.Call {
+  get inputs(): FlashConvertLockCall__Inputs {
+    return new FlashConvertLockCall__Inputs(this);
+  }
+
+  get outputs(): FlashConvertLockCall__Outputs {
+    return new FlashConvertLockCall__Outputs(this);
+  }
+}
+
+export class FlashConvertLockCall__Inputs {
+  _call: FlashConvertLockCall;
+
+  constructor(call: FlashConvertLockCall) {
     this._call = call;
   }
 
-  get value0(): BigInt {
-    return this._call.outputValues[0].value.toBigInt();
+  get depositor(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get recipient(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get collateralId(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+}
+
+export class FlashConvertLockCall__Outputs {
+  _call: FlashConvertLockCall;
+
+  constructor(call: FlashConvertLockCall) {
+    this._call = call;
   }
 }
 
@@ -314,7 +843,7 @@ export class SetOwnerCall__Inputs {
     this._call = call;
   }
 
-  get value0(): Address {
+  get newOwner(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 }
@@ -323,6 +852,108 @@ export class SetOwnerCall__Outputs {
   _call: SetOwnerCall;
 
   constructor(call: SetOwnerCall) {
+    this._call = call;
+  }
+}
+
+export class SetLockTimeCall extends ethereum.Call {
+  get inputs(): SetLockTimeCall__Inputs {
+    return new SetLockTimeCall__Inputs(this);
+  }
+
+  get outputs(): SetLockTimeCall__Outputs {
+    return new SetLockTimeCall__Outputs(this);
+  }
+}
+
+export class SetLockTimeCall__Inputs {
+  _call: SetLockTimeCall;
+
+  constructor(call: SetLockTimeCall) {
+    this._call = call;
+  }
+
+  get lockTime(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class SetLockTimeCall__Outputs {
+  _call: SetLockTimeCall;
+
+  constructor(call: SetLockTimeCall) {
+    this._call = call;
+  }
+}
+
+export class SetMaxLockTimeCall extends ethereum.Call {
+  get inputs(): SetMaxLockTimeCall__Inputs {
+    return new SetMaxLockTimeCall__Inputs(this);
+  }
+
+  get outputs(): SetMaxLockTimeCall__Outputs {
+    return new SetMaxLockTimeCall__Outputs(this);
+  }
+}
+
+export class SetMaxLockTimeCall__Inputs {
+  _call: SetMaxLockTimeCall;
+
+  constructor(call: SetMaxLockTimeCall) {
+    this._call = call;
+  }
+
+  get maxLockTime(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class SetMaxLockTimeCall__Outputs {
+  _call: SetMaxLockTimeCall;
+
+  constructor(call: SetMaxLockTimeCall) {
+    this._call = call;
+  }
+}
+
+export class SetCollateralParamsCall extends ethereum.Call {
+  get inputs(): SetCollateralParamsCall__Inputs {
+    return new SetCollateralParamsCall__Inputs(this);
+  }
+
+  get outputs(): SetCollateralParamsCall__Outputs {
+    return new SetCollateralParamsCall__Outputs(this);
+  }
+}
+
+export class SetCollateralParamsCall__Inputs {
+  _call: SetCollateralParamsCall;
+
+  constructor(call: SetCollateralParamsCall) {
+    this._call = call;
+  }
+
+  get collateralAssetId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get addr(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get decimals(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get priceFeed(): Address {
+    return this._call.inputValues[3].value.toAddress();
+  }
+}
+
+export class SetCollateralParamsCall__Outputs {
+  _call: SetCollateralParamsCall;
+
+  constructor(call: SetCollateralParamsCall) {
     this._call = call;
   }
 }
@@ -344,11 +975,11 @@ export class SetPriceFeedCall__Inputs {
     this._call = call;
   }
 
-  get value0(): BigInt {
+  get assetId(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 
-  get value1(): Address {
+  get feed(): Address {
     return this._call.inputValues[1].value.toAddress();
   }
 }
@@ -357,6 +988,70 @@ export class SetPriceFeedCall__Outputs {
   _call: SetPriceFeedCall;
 
   constructor(call: SetPriceFeedCall) {
+    this._call = call;
+  }
+}
+
+export class SetMinCollatFactorCall extends ethereum.Call {
+  get inputs(): SetMinCollatFactorCall__Inputs {
+    return new SetMinCollatFactorCall__Inputs(this);
+  }
+
+  get outputs(): SetMinCollatFactorCall__Outputs {
+    return new SetMinCollatFactorCall__Outputs(this);
+  }
+}
+
+export class SetMinCollatFactorCall__Inputs {
+  _call: SetMinCollatFactorCall;
+
+  constructor(call: SetMinCollatFactorCall) {
+    this._call = call;
+  }
+
+  get collateralId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get newFactor(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+}
+
+export class SetMinCollatFactorCall__Outputs {
+  _call: SetMinCollatFactorCall;
+
+  constructor(call: SetMinCollatFactorCall) {
+    this._call = call;
+  }
+}
+
+export class UpdatePriceCall extends ethereum.Call {
+  get inputs(): UpdatePriceCall__Inputs {
+    return new UpdatePriceCall__Inputs(this);
+  }
+
+  get outputs(): UpdatePriceCall__Outputs {
+    return new UpdatePriceCall__Outputs(this);
+  }
+}
+
+export class UpdatePriceCall__Inputs {
+  _call: UpdatePriceCall;
+
+  constructor(call: UpdatePriceCall) {
+    this._call = call;
+  }
+
+  get collateralId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class UpdatePriceCall__Outputs {
+  _call: UpdatePriceCall;
+
+  constructor(call: UpdatePriceCall) {
     this._call = call;
   }
 }
