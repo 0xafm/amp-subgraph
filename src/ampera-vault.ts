@@ -13,11 +13,12 @@ export function handlePaymentLockCreated(event: PaymentLockCreated): void {
   const lock = loadPaymentLock(
     event.params.locker.toHex() + event.params.claimant.toHex(),
   )
-  let account = loadAccount(event.params.locker)
+  let locker = loadAccount(event.params.locker)
 
-  account.nonce = account.nonce.plus(BigInt.fromI64(1))
+  locker.nonce = locker.nonce.plus(BigInt.fromI64(1))
 
   lock.account = event.params.locker
+  lock.claimant = event.params.claimant
   lock.amount = event.params.amount
   lock.claimed = false
   lock.collateralId = event.params.collateralId
@@ -27,6 +28,7 @@ export function handlePaymentLockCreated(event: PaymentLockCreated): void {
   lock.securedAssetId = event.params.securedAssetId
 
   lock.save()
+  locker.save()
 }
 
 export function handlePaymentLockClaimed(event: PaymentLockClaimed): void {

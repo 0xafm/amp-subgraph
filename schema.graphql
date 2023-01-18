@@ -1,7 +1,7 @@
 type PaymentLock @entity(immutable: false) {
   id: String!
   account: Account!
-  claimant: Bytes!
+  claimant: Account!
   amount: BigInt!
   expiration: BigInt!
   collateralId: BigInt!
