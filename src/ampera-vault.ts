@@ -14,6 +14,7 @@ export function handlePaymentLockCreated(event: PaymentLockCreated): void {
     event.params.locker.toHex() + event.params.claimant.toHex(),
   )
   let locker = loadAccount(event.params.locker)
+  let claimant = loadAccount(event.params.claimant)
 
   locker.nonce = locker.nonce.plus(BigInt.fromI64(1))
 
