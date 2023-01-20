@@ -7,8 +7,8 @@ dataSources:
     network: goerli
     source:
       abi: AmperaVault
-      address: '0x55B24fA9b60b0321D0766d4520B64F2909E30E30'
-      startBlock: 8334563
+      address: '0x7425aFE7E6aFda5F51Ca58B53C861074460E32e2'
+      startBlock: 8340800
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
