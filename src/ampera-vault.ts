@@ -30,6 +30,7 @@ export function handlePaymentLockCreated(event: PaymentLockCreated): void {
 
   lock.save()
   locker.save()
+  claimant.save()
 }
 
 export function handlePaymentLockClaimed(event: PaymentLockClaimed): void {
