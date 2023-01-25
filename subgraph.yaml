@@ -7,8 +7,8 @@ dataSources:
     network: goerli
     source:
       abi: AmperaVault
-      address: '0x7425aFE7E6aFda5F51Ca58B53C861074460E32e2'
-      startBlock: 8340800
+      address: '0xcF2D63a26E9d16Cb033ab2C5eB0De0d454Fb7C1b'
+      startBlock: 8375895
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -22,8 +22,7 @@ dataSources:
       eventHandlers:
         - event: PaymentLockClaimed(indexed address,indexed address,address,uint256)
           handler: handlePaymentLockClaimed
-        - event: PaymentLockCreated(indexed address,indexed
-            address,uint256,uint256,uint256,uint256,uint256,uint256,bool,bool)
+        - event: PaymentLockCreated(indexed address,indexed address,uint256,uint256,uint256,uint256,uint256,uint256,bool,bool)
           handler: handlePaymentLockCreated
         - event: PaymentLockExpirationExtended(indexed address,indexed address,uint256)
           handler: handlePaymentLockExpirationExtended

@@ -10,52 +10,6 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class PaymentLockEvent extends ethereum.Event {
-  get params(): PaymentLockEvent__Params {
-    return new PaymentLockEvent__Params(this);
-  }
-}
-
-export class PaymentLockEvent__Params {
-  _event: PaymentLockEvent;
-
-  constructor(event: PaymentLockEvent) {
-    this._event = event;
-  }
-
-  get locker(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get recipient(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get amount(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get collateralId(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
-  }
-
-  get securedAssetId(): BigInt {
-    return this._event.parameters[4].value.toBigInt();
-  }
-
-  get securedAmount(): BigInt {
-    return this._event.parameters[5].value.toBigInt();
-  }
-
-  get nonce(): BigInt {
-    return this._event.parameters[6].value.toBigInt();
-  }
-
-  get eventType(): BigInt {
-    return this._event.parameters[7].value.toBigInt();
-  }
-}
-
 export class PaymentLockCreated extends ethereum.Event {
   get params(): PaymentLockCreated__Params {
     return new PaymentLockCreated__Params(this);
@@ -292,6 +246,104 @@ export class AmperaVault extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  getCollateralHealthForLock(locker: Address, recipient: Address): BigInt {
+    let result = super.call(
+      "getCollateralHealthForLock",
+      "getCollateralHealthForLock(address,address):(uint256)",
+      [
+        ethereum.Value.fromAddress(locker),
+        ethereum.Value.fromAddress(recipient)
+      ]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_getCollateralHealthForLock(
+    locker: Address,
+    recipient: Address
+  ): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "getCollateralHealthForLock",
+      "getCollateralHealthForLock(address,address):(uint256)",
+      [
+        ethereum.Value.fromAddress(locker),
+        ethereum.Value.fromAddress(recipient)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  generateSpendAuthHash(
+    sender: Address,
+    recipient: Address,
+    collateralId: BigInt,
+    nonce: BigInt
+  ): Bytes {
+    let result = super.call(
+      "generateSpendAuthHash",
+      "generateSpendAuthHash(address,address,uint256,uint256):(bytes32)",
+      [
+        ethereum.Value.fromAddress(sender),
+        ethereum.Value.fromAddress(recipient),
+        ethereum.Value.fromUnsignedBigInt(collateralId),
+        ethereum.Value.fromUnsignedBigInt(nonce)
+      ]
+    );
+
+    return result[0].toBytes();
+  }
+
+  try_generateSpendAuthHash(
+    sender: Address,
+    recipient: Address,
+    collateralId: BigInt,
+    nonce: BigInt
+  ): ethereum.CallResult<Bytes> {
+    let result = super.tryCall(
+      "generateSpendAuthHash",
+      "generateSpendAuthHash(address,address,uint256,uint256):(bytes32)",
+      [
+        ethereum.Value.fromAddress(sender),
+        ethereum.Value.fromAddress(recipient),
+        ethereum.Value.fromUnsignedBigInt(collateralId),
+        ethereum.Value.fromUnsignedBigInt(nonce)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
+  }
+
+  recover_sig(hash: Bytes, signature: Bytes): Address {
+    let result = super.call(
+      "recover_sig",
+      "recover_sig(bytes32,bytes):(address)",
+      [ethereum.Value.fromFixedBytes(hash), ethereum.Value.fromBytes(signature)]
+    );
+
+    return result[0].toAddress();
+  }
+
+  try_recover_sig(hash: Bytes, signature: Bytes): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "recover_sig",
+      "recover_sig(bytes32,bytes):(address)",
+      [ethereum.Value.fromFixedBytes(hash), ethereum.Value.fromBytes(signature)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   priceFeeds(arg0: BigInt): Address {
     let result = super.call("priceFeeds", "priceFeeds(uint256):(address)", [
       ethereum.Value.fromUnsignedBigInt(arg0)
@@ -406,6 +458,29 @@ export class AmperaVault extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
+
+  IERC1271_ISVALIDSIGNATURE_SELECTOR(): Bytes {
+    let result = super.call(
+      "IERC1271_ISVALIDSIGNATURE_SELECTOR",
+      "IERC1271_ISVALIDSIGNATURE_SELECTOR():(bytes4)",
+      []
+    );
+
+    return result[0].toBytes();
+  }
+
+  try_IERC1271_ISVALIDSIGNATURE_SELECTOR(): ethereum.CallResult<Bytes> {
+    let result = super.tryCall(
+      "IERC1271_ISVALIDSIGNATURE_SELECTOR",
+      "IERC1271_ISVALIDSIGNATURE_SELECTOR():(bytes4)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
+  }
 }
 
 export class ConstructorCall extends ethereum.Call {
@@ -468,52 +543,6 @@ export class DepositCall__Outputs {
   }
 }
 
-export class GetCollateralHealthCall extends ethereum.Call {
-  get inputs(): GetCollateralHealthCall__Inputs {
-    return new GetCollateralHealthCall__Inputs(this);
-  }
-
-  get outputs(): GetCollateralHealthCall__Outputs {
-    return new GetCollateralHealthCall__Outputs(this);
-  }
-}
-
-export class GetCollateralHealthCall__Inputs {
-  _call: GetCollateralHealthCall;
-
-  constructor(call: GetCollateralHealthCall) {
-    this._call = call;
-  }
-
-  get collateralId(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get collateralAmount(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
-  get securedAssetId(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-
-  get securedAmount(): BigInt {
-    return this._call.inputValues[3].value.toBigInt();
-  }
-}
-
-export class GetCollateralHealthCall__Outputs {
-  _call: GetCollateralHealthCall;
-
-  constructor(call: GetCollateralHealthCall) {
-    this._call = call;
-  }
-
-  get value0(): BigInt {
-    return this._call.outputValues[0].value.toBigInt();
-  }
-}
-
 export class CreateLockCall extends ethereum.Call {
   get inputs(): CreateLockCall__Inputs {
     return new CreateLockCall__Inputs(this);
@@ -556,6 +585,56 @@ export class CreateLockCall__Outputs {
   _call: CreateLockCall;
 
   constructor(call: CreateLockCall) {
+    this._call = call;
+  }
+}
+
+export class CreateLock1Call extends ethereum.Call {
+  get inputs(): CreateLock1Call__Inputs {
+    return new CreateLock1Call__Inputs(this);
+  }
+
+  get outputs(): CreateLock1Call__Outputs {
+    return new CreateLock1Call__Outputs(this);
+  }
+}
+
+export class CreateLock1Call__Inputs {
+  _call: CreateLock1Call;
+
+  constructor(call: CreateLock1Call) {
+    this._call = call;
+  }
+
+  get recipient(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get collateralId(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get securedAssetId(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
+  }
+
+  get securedAmount(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
+  }
+
+  get _duration(): BigInt {
+    return this._call.inputValues[5].value.toBigInt();
+  }
+}
+
+export class CreateLock1Call__Outputs {
+  _call: CreateLock1Call;
+
+  constructor(call: CreateLock1Call) {
     this._call = call;
   }
 }
@@ -666,6 +745,44 @@ export class ClaimCollateralCall__Outputs {
   }
 }
 
+export class ClaimCollateral1Call extends ethereum.Call {
+  get inputs(): ClaimCollateral1Call__Inputs {
+    return new ClaimCollateral1Call__Inputs(this);
+  }
+
+  get outputs(): ClaimCollateral1Call__Outputs {
+    return new ClaimCollateral1Call__Outputs(this);
+  }
+}
+
+export class ClaimCollateral1Call__Inputs {
+  _call: ClaimCollateral1Call;
+
+  constructor(call: ClaimCollateral1Call) {
+    this._call = call;
+  }
+
+  get depositor(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get claimRecipient(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get convertCollateral(): boolean {
+    return this._call.inputValues[2].value.toBoolean();
+  }
+}
+
+export class ClaimCollateral1Call__Outputs {
+  _call: ClaimCollateral1Call;
+
+  constructor(call: ClaimCollateral1Call) {
+    this._call = call;
+  }
+}
+
 export class UnlockWithSignatureCall extends ethereum.Call {
   get inputs(): UnlockWithSignatureCall__Inputs {
     return new UnlockWithSignatureCall__Inputs(this);
@@ -695,16 +812,8 @@ export class UnlockWithSignatureCall__Inputs {
     return this._call.inputValues[2].value.toBigInt();
   }
 
-  get r(): BigInt {
-    return this._call.inputValues[3].value.toBigInt();
-  }
-
-  get s(): BigInt {
-    return this._call.inputValues[4].value.toBigInt();
-  }
-
-  get v(): BigInt {
-    return this._call.inputValues[5].value.toBigInt();
+  get sig(): Bytes {
+    return this._call.inputValues[3].value.toBytes();
   }
 }
 

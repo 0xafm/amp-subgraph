@@ -1,4 +1,4 @@
-import { BigInt } from '@graphprotocol/graph-ts'
+import { BigInt, log } from '@graphprotocol/graph-ts'
 import {
   PaymentLockClaimed,
   PaymentLockCreated,
@@ -10,16 +10,18 @@ import {
 import { loadAccount, loadPaymentLock } from './utils'
 
 export function handlePaymentLockCreated(event: PaymentLockCreated): void {
+  let locker = loadAccount(event.params.locker.toHex())
+  log.warning('locker nonce {}', [locker.nonce.toString()])
+  locker.nonce = locker.nonce.plus(BigInt.fromI64(1))
+  locker.save()
+  let claimant = loadAccount(event.params.claimant.toHex())
+  claimant.save()
   const lock = loadPaymentLock(
     event.params.locker.toHex() + event.params.claimant.toHex(),
   )
-  let locker = loadAccount(event.params.locker)
-  let claimant = loadAccount(event.params.claimant)
 
-  locker.nonce = locker.nonce.plus(BigInt.fromI64(1))
-
-  lock.account = event.params.locker
-  lock.claimant = event.params.claimant
+  lock.account = locker.id
+  lock.claimant = claimant.id
   lock.amount = event.params.amount
   lock.claimed = false
   lock.collateralId = event.params.collateralId
@@ -27,10 +29,8 @@ export function handlePaymentLockCreated(event: PaymentLockCreated): void {
   lock.nonce = event.params.nonce
   lock.securedAmount = event.params.securedAmount
   lock.securedAssetId = event.params.securedAssetId
-
+  log.info('locker = {}, claimant = {}', [locker.id, claimant.id])
   lock.save()
-  locker.save()
-  claimant.save()
 }
 
 export function handlePaymentLockClaimed(event: PaymentLockClaimed): void {

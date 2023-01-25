@@ -12,7 +12,7 @@ type PaymentLock @entity(immutable: false) {
 }
 
 type Account @entity(immutable: false) {
-  id: Bytes!
+  id: String!
   paymentLocks: [PaymentLock!] @derivedFrom(field: "account")
   nonce: BigInt!
 }

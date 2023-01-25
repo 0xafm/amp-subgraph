@@ -42,22 +42,22 @@ export class PaymentLock extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get account(): Bytes {
+  get account(): string {
     let value = this.get("account");
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set account(value: Bytes) {
-    this.set("account", Value.fromBytes(value));
+  set account(value: string) {
+    this.set("account", Value.fromString(value));
   }
 
-  get claimant(): Bytes {
+  get claimant(): string {
     let value = this.get("claimant");
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set claimant(value: Bytes) {
-    this.set("claimant", Value.fromBytes(value));
+  set claimant(value: string) {
+    this.set("claimant", Value.fromString(value));
   }
 
   get amount(): BigInt {
@@ -125,9 +125,9 @@ export class PaymentLock extends Entity {
 }
 
 export class Account extends Entity {
-  constructor(id: Bytes) {
+  constructor(id: string) {
     super();
-    this.set("id", Value.fromBytes(id));
+    this.set("id", Value.fromString(id));
   }
 
   save(): void {
@@ -135,24 +135,24 @@ export class Account extends Entity {
     assert(id != null, "Cannot save Account entity without an ID");
     if (id) {
       assert(
-        id.kind == ValueKind.BYTES,
-        `Entities of type Account must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.STRING,
+        `Entities of type Account must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("Account", id.toBytes().toHexString(), this);
+      store.set("Account", id.toString(), this);
     }
   }
 
-  static load(id: Bytes): Account | null {
-    return changetype<Account | null>(store.get("Account", id.toHexString()));
+  static load(id: string): Account | null {
+    return changetype<Account | null>(store.get("Account", id));
   }
 
-  get id(): Bytes {
+  get id(): string {
     let value = this.get("id");
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set id(value: Bytes) {
-    this.set("id", Value.fromBytes(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get paymentLocks(): Array<string> | null {

@@ -1,20 +1,5 @@
 [
   {
-    "name": "PaymentLockEvent",
-    "inputs": [
-      { "name": "locker", "type": "address", "indexed": true },
-      { "name": "recipient", "type": "address", "indexed": true },
-      { "name": "amount", "type": "uint256", "indexed": false },
-      { "name": "collateralId", "type": "uint256", "indexed": false },
-      { "name": "securedAssetId", "type": "uint256", "indexed": false },
-      { "name": "securedAmount", "type": "uint256", "indexed": false },
-      { "name": "nonce", "type": "uint256", "indexed": false },
-      { "name": "eventType", "type": "uint256", "indexed": true }
-    ],
-    "anonymous": false,
-    "type": "event"
-  },
-  {
     "name": "PaymentLockCreated",
     "inputs": [
       { "name": "locker", "type": "address", "indexed": true },
@@ -99,7 +84,7 @@
     "outputs": []
   },
   {
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function",
     "name": "getCollateralHealth",
     "inputs": [
@@ -107,6 +92,16 @@
       { "name": "collateralAmount", "type": "uint256" },
       { "name": "securedAssetId", "type": "uint256" },
       { "name": "securedAmount", "type": "uint256" }
+    ],
+    "outputs": [{ "name": "", "type": "uint256" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "getCollateralHealthForLock",
+    "inputs": [
+      { "name": "locker", "type": "address" },
+      { "name": "recipient", "type": "address" }
     ],
     "outputs": [{ "name": "", "type": "uint256" }]
   },
@@ -120,6 +115,20 @@
       { "name": "collateralId", "type": "uint256" },
       { "name": "securedAssetId", "type": "uint256" },
       { "name": "securedAmount", "type": "uint256" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "createLock",
+    "inputs": [
+      { "name": "recipient", "type": "address" },
+      { "name": "amount", "type": "uint256" },
+      { "name": "collateralId", "type": "uint256" },
+      { "name": "securedAssetId", "type": "uint256" },
+      { "name": "securedAmount", "type": "uint256" },
+      { "name": "_duration", "type": "uint256" }
     ],
     "outputs": []
   },
@@ -157,14 +166,23 @@
   {
     "stateMutability": "nonpayable",
     "type": "function",
+    "name": "claimCollateral",
+    "inputs": [
+      { "name": "depositor", "type": "address" },
+      { "name": "claimRecipient", "type": "address" },
+      { "name": "convertCollateral", "type": "bool" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
     "name": "unlockWithSignature",
     "inputs": [
       { "name": "depositor", "type": "address" },
       { "name": "recipient", "type": "address" },
       { "name": "nonce", "type": "uint256" },
-      { "name": "r", "type": "uint256" },
-      { "name": "s", "type": "uint256" },
-      { "name": "v", "type": "uint256" }
+      { "name": "sig", "type": "bytes" }
     ],
     "outputs": []
   },
@@ -254,6 +272,28 @@
     "outputs": []
   },
   {
+    "stateMutability": "pure",
+    "type": "function",
+    "name": "generateSpendAuthHash",
+    "inputs": [
+      { "name": "sender", "type": "address" },
+      { "name": "recipient", "type": "address" },
+      { "name": "collateralId", "type": "uint256" },
+      { "name": "nonce", "type": "uint256" }
+    ],
+    "outputs": [{ "name": "", "type": "bytes32" }]
+  },
+  {
+    "stateMutability": "pure",
+    "type": "function",
+    "name": "recover_sig",
+    "inputs": [
+      { "name": "hash", "type": "bytes32" },
+      { "name": "signature", "type": "bytes" }
+    ],
+    "outputs": [{ "name": "", "type": "address" }]
+  },
+  {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "updatePrice",
@@ -300,5 +340,12 @@
       { "name": "arg1", "type": "uint256" }
     ],
     "outputs": [{ "name": "", "type": "uint256" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "IERC1271_ISVALIDSIGNATURE_SELECTOR",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "bytes4" }]
   }
 ]

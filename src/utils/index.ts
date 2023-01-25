@@ -5,8 +5,8 @@ export function loadPaymentLock(id: string): PaymentLock {
   let entity = PaymentLock.load(id)
   if (entity == null) {
     entity = new PaymentLock(id)
-    entity.account = new Address(0)
-    entity.claimant = new Address(0)
+    entity.account = new Address(0).toHexString()
+    entity.claimant = new Address(0).toHexString()
     entity.amount = BigInt.fromI64(0)
     entity.claimed = false
     entity.collateralId = BigInt.fromI64(0)
@@ -14,18 +14,15 @@ export function loadPaymentLock(id: string): PaymentLock {
     entity.nonce = BigInt.fromI64(0)
     entity.securedAmount = BigInt.fromI64(0)
     entity.securedAssetId = BigInt.fromI64(0)
-
-    entity.save()
   }
   return entity
 }
 
-export function loadAccount(id: Address): Account {
+export function loadAccount(id: string): Account {
   let entity = Account.load(id)
   if (entity == null) {
     entity = new Account(id)
     entity.nonce = BigInt.fromI64(0)
-    entity.save()
   }
   return entity
 }
