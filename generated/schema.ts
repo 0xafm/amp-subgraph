@@ -122,6 +122,15 @@ export class PaymentLock extends Entity {
   set claimed(value: boolean) {
     this.set("claimed", Value.fromBoolean(value));
   }
+
+  get claimReason(): string {
+    let value = this.get("claimReason");
+    return value!.toString();
+  }
+
+  set claimReason(value: string) {
+    this.set("claimReason", Value.fromString(value));
+  }
 }
 
 export class Account extends Entity {

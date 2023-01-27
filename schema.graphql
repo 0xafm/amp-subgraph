@@ -9,6 +9,7 @@ type PaymentLock @entity(immutable: false) {
   securedAmount: BigInt!
   nonce: BigInt!
   claimed: Boolean!
+  claimReason: String
 }
 
 type Account @entity(immutable: false) {
