@@ -405,6 +405,29 @@ export class AmperaVault extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
+  MIN_COLLAT_FACTOR(arg0: BigInt): BigInt {
+    let result = super.call(
+      "MIN_COLLAT_FACTOR",
+      "MIN_COLLAT_FACTOR(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(arg0)]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_MIN_COLLAT_FACTOR(arg0: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "MIN_COLLAT_FACTOR",
+      "MIN_COLLAT_FACTOR(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(arg0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
   deposits(arg0: Address, arg1: BigInt): BigInt {
     let result = super.call("deposits", "deposits(address,uint256):(uint256)", [
       ethereum.Value.fromAddress(arg0),
@@ -539,6 +562,40 @@ export class DepositCall__Outputs {
   _call: DepositCall;
 
   constructor(call: DepositCall) {
+    this._call = call;
+  }
+}
+
+export class WithdrawCall extends ethereum.Call {
+  get inputs(): WithdrawCall__Inputs {
+    return new WithdrawCall__Inputs(this);
+  }
+
+  get outputs(): WithdrawCall__Outputs {
+    return new WithdrawCall__Outputs(this);
+  }
+}
+
+export class WithdrawCall__Inputs {
+  _call: WithdrawCall;
+
+  constructor(call: WithdrawCall) {
+    this._call = call;
+  }
+
+  get collateralId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+}
+
+export class WithdrawCall__Outputs {
+  _call: WithdrawCall;
+
+  constructor(call: WithdrawCall) {
     this._call = call;
   }
 }
