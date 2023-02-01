@@ -4,10 +4,10 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ christianholman/amf",
-    "create-local": "graph create --node http://localhost:8020/ christianholman/amf-graph",
-    "remove-local": "graph remove --node http://localhost:8020/ christianholman/amf-graph",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 christianholman/amf-graph",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ 0xafm/amf",
+    "create-local": "graph create --node http://localhost:8020/ 0xafm/amf-graph",
+    "remove-local": "graph remove --node http://localhost:8020/ 0xafm/amf-graph",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 0xafm/amf-graph",
     "test": "graph test"
   },
   "dependencies": {
